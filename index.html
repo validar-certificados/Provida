@@ -77,6 +77,23 @@
     .footer-col h4 { color: #333; font-weight: 600; margin-bottom: 10px; font-size: 0.85rem; }
     .footer-col a { display: block; color: #666; text-decoration: none; margin-bottom: 5px; }
     .footer-copy { text-align: center; padding: 14px; font-size: 0.75rem; color: #999; border-top: 1px solid #e0e4e8; margin-top: 28px; }
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .navbar { padding: 10px 16px; flex-wrap: wrap; justify-content: space-between; }
+      .navbar nav { display: none; /* Hide complex nav on mobile */ }
+      .navbar .btn-sucursal { margin-left: 0; }
+      .breadcrumb { padding: 10px 16px; flex-wrap: wrap; }
+      .hero { padding: 40px 16px; text-align: center; }
+      .hero h1 { font-size: 1.8rem; }
+      .form-section { padding: 0 16px 40px; }
+      .validator-card-inner { padding: 20px 16px; }
+      .validator-card-inner h2 { margin: -20px -16px 20px; padding: 16px; font-size: 1.1rem; }
+      .cta-banner { flex-direction: column; text-align: center; }
+      .cta-banner .img-side { width: 100%; min-height: auto; }
+      .footer { padding: 24px 16px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+    }
   </style>
 </head>
 <body>
@@ -102,7 +119,7 @@
   <h1>Valida tus Certificados</h1>
 </div>
 
-<div style="padding: 0 40px; max-width: 900px; margin: 0 auto; width: 100%;">
+<div class="form-section">
   <div class="intro-text">
     <p><strong>Te contamos cómo validar tu certificado según el formato de tu documento.</strong></p>
     <br/>
@@ -165,13 +182,21 @@
 <script>
   const WEBHOOK = 'https://hook.us2.make.com/iq6ps3txx1jaxr91mje7sx47ynbta3kb';
 
+  function abrirPDF(b64) {
+    let base64 = b64.startsWith('data:') ? b64.split(',')[1] : b64;
+    const binary = atob(base64); const array = new Uint8Array(binary.length);
+    for(let i=0; i<binary.length; i++) array[i] = binary.charCodeAt(i);
+    const url = URL.createObjectURL(new Blob([array], {type: 'application/pdf'}));
+    window.open(url, '_blank');
+  }
+
   async function validar() {
-    const rut   = document.getElementById('rut').value.trim();
+    const rut = document.getElementById('rut').value.trim();
     const folio = document.getElementById('folio').value.trim();
-    const uuid  = folio;
-    if (!rut || !folio) { alert('Por favor ingresa el RUT y el folio del certificado.'); return; }
-    const btn = document.getElementById('btn-validar');
-    btn.disabled = true;
+    const uuid = folio;
+    if (!rut || !folio) { alert('Ingresa RUT y folio'); return; }
+    
+    document.getElementById('btn-validar').disabled = true;
     document.getElementById('spinner').classList.add('active');
     document.getElementById('result-box').classList.remove('visible');
 
@@ -180,52 +205,37 @@
 
     try {
       const res = await fetch(WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ uuid: uuid, afp: 'Provida' }),
-        signal: controller.signal
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uuid: uuid, afp: 'Provida' }), signal: controller.signal
       });
-      clearTimeout(timeout);
-      const data = await res.json();
+      clearTimeout(timeout); const data = await res.json();
+      
       document.getElementById('spinner').classList.remove('active');
-      const box = document.getElementById('result-box');
-      const hdr = document.getElementById('result-header');
-      const bdy = document.getElementById('result-body');
+      const box = document.getElementById('result-box'), hdr = document.getElementById('result-header'), bdy = document.getElementById('result-body');
+      
       if (data.found === true && data.pdf) {
         hdr.className = 'result-header success';
-        hdr.innerHTML = '<svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2e7d32"/><path d="M8 12l3 3 5-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Certificado válido';
-        const pdfData = data.pdf.startsWith('data:') ? data.pdf : 'data:application/pdf;base64,' + data.pdf;
-        bdy.innerHTML = '<div class="name">' + (data.name || 'Certificado encontrado') + '</div>' +
-          '<div style="margin-top:12px;border:1px solid #ddd;border-radius:4px;overflow:hidden;">' +
-          '<iframe src="' + pdfData + '" style="width:100%;height:500px;border:none;" title="Certificado PDF"></iframe></div>';
+        hdr.style.background = 'linear-gradient(135deg, #1a6b9a, #2ecc8a)';
+        hdr.style.color = '#fff'; hdr.style.border = 'none';
+        hdr.innerHTML = `✓ CERTIFICADO VÁLIDO`;
+        bdy.innerHTML = `
+          <div style="text-align:center; padding: 20px 0;">
+            <p style="color:#1a6b9a; font-size:1.1rem; font-weight:700; margin-bottom:12px;">${data.name || 'Documento Oficial Encontrado'}</p>
+            <p style="color:#666; font-size:0.9rem; margin-bottom:24px;">La validación se ha realizado con éxito en los registros de ProVida AFP.</p>
+            <button onclick="abrirPDF('${data.pdf}')" style="background:#1a7cbf; color:#fff; border:none; padding:10px 24px; border-radius:30px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(26,124,191,0.3);">Descargar Documento</button>
+          </div>`;
       } else if (data.found === false) {
-        hdr.className = 'result-header error';
-        hdr.innerHTML = '<svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#c62828"/><path d="M15 9l-6 6M9 9l6 6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg> Certificado no encontrado';
-        bdy.innerHTML = '<p style="color:#555;font-size:0.9rem;">No se encontró ningún certificado con los datos ingresados.</p>';
+        hdr.className = 'result-header error'; hdr.innerHTML = `❌ Certificado no encontrado`;
+        bdy.innerHTML = `<p style="color:#555;font-size:0.9rem;">No hay registros con estos datos.</p>`;
       } else {
-        hdr.className = 'result-header error';
-        hdr.innerHTML = '⚠️ Respuesta inesperada del servidor.';
-        bdy.innerHTML = '<p style="color:#555;font-size:0.9rem;">Intenta nuevamente en unos minutos.</p>';
+        hdr.className = 'result-header error'; hdr.innerHTML = '⚠️ Error inesperado.';
       }
       box.classList.add('visible');
     } catch(err) {
-      clearTimeout(timeout);
-      document.getElementById('spinner').classList.remove('active');
-      const box = document.getElementById('result-box');
-      const hdr = document.getElementById('result-header');
-      const bdy = document.getElementById('result-body');
-      hdr.className = 'result-header error';
-      if (err.name === 'AbortError') {
-        hdr.innerHTML = '⚠️ Tiempo de espera agotado.';
-        bdy.innerHTML = '<p style="color:#555;font-size:0.9rem;">El servidor tardó demasiado. Intenta nuevamente.</p>';
-      } else {
-        hdr.innerHTML = '⚠️ No se pudo conectar con el servidor.';
-        bdy.innerHTML = '<p style="color:#555;font-size:0.9rem;">Verifica tu conexión e intenta nuevamente.</p>';
-      }
-      box.classList.add('visible');
-    } finally {
-      btn.disabled = false;
-    }
+      clearTimeout(timeout); document.getElementById('spinner').classList.remove('active');
+      document.getElementById('result-header').innerHTML = '⚠️ Error de conexión.';
+      document.getElementById('result-box').classList.add('visible');
+    } finally { document.getElementById('btn-validar').disabled = false; }
   }
 
   window.addEventListener('DOMContentLoaded', function() {
