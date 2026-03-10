@@ -13,143 +13,127 @@
     body { font-family: 'Roboto', sans-serif; background: #fff; color: #333; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
 
     /* ── NAVBAR ── */
-    .top-nav-border { border-top: 4px solid #fff; } 
-    .navbar { background: #fff; padding: 14px 40px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.05); position: relative; z-index: 10; }
-    .navbar img { height: 46px; object-fit: contain; }
-    .navbar nav { display: flex; gap: 6px; margin-left: 20px; }
-    .navbar nav a { font-size: 0.85rem; color: #333; text-decoration: none; padding: 8px 12px; font-weight: 600; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; }
+    .navbar { background: #fff; padding: 14px 40px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #eaeaea; position: relative; z-index: 10; }
+    .navbar img { height: 40px; object-fit: contain; }
+    .navbar nav { display: flex; gap: 20px; margin-left: 30px; }
+    .navbar nav a { font-size: 0.8rem; color: #000; text-decoration: none; font-weight: 700; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; text-transform: uppercase; }
     .navbar nav a:hover { color: #1a6b9a; }
-    .navbar .btn-sucursal { margin-left: auto; color: #333; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .navbar .btn-sucursal { margin-left: auto; color: #333; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; border-left: 1px solid #eaeaea; padding-left: 20px; }
     .navbar .btn-sucursal svg { fill: #333; width: 16px; height: 16px; }
     .navbar .btn-search { background: none; border: none; cursor: pointer; color: #333; padding: 8px; font-size: 1.2rem; font-weight: bold; margin-left: 10px; }
 
-    /* ── BREADCRUMB ── */
-    .breadcrumb-wrap { border-bottom: 1px solid #eee; margin-bottom: 40px; }
-    .breadcrumb { max-width: 1000px; margin: 0 auto; padding: 14px 20px; font-size: 0.8rem; color: #888; }
-    .breadcrumb a { color: #1a6b9a; text-decoration: none; }
+    /* ── BREADCRUMB PILL ── */
+    .breadcrumb-container { max-width: 1140px; margin: 30px auto 20px; padding: 0 20px; }
+    .breadcrumb-pill { display: inline-flex; border: 1px solid #dcdcdc; border-radius: 30px; padding: 8px 20px; font-size: 0.65rem; font-weight: 700; color: #333; align-items: center; gap: 10px; text-transform: uppercase; }
+    .breadcrumb-pill a { color: #333; text-decoration: none; }
+    .breadcrumb-pill svg { width: 14px; height: 14px; fill: #333; }
+    .breadcrumb-pill span { color: #888; }
 
-    /* ── MAIN SECTION ── */
-    .form-section { padding: 0 20px 40px; max-width: 900px; margin: 0 auto; width: 100%; }
+    /* ── HERO BANNER ── */
+    .hero-banner { background: linear-gradient(90deg, #106fb6 0%, #28a18c 100%); padding: 50px 20px; width: 100%; }
+    .hero-banner-inner { max-width: 1100px; margin: 0 auto; }
+    .hero-banner h1 { color: #fff; font-size: 2.6rem; font-weight: 700; margin: 0; }
 
-    /* ── BANNER DEGRADADO CON COLA ── */
-    .validador-header-wrap { position: relative; margin-bottom: 40px; }
-    .validador-header { 
-      background: linear-gradient(90deg, #00547b 0%, #59a980 100%); 
-      color: #fff; 
-      padding: 50px 60px; 
-      border-radius: 2px;
-    }
-    .validador-header h1 { font-size: 2.2rem; font-weight: 700; margin: 0; letter-spacing: -0.5px; }
+    /* ── INTRO TEXT ── */
+    .intro-text { max-width: 800px; margin: 40px auto 60px; padding: 0 20px; font-size: 0.95rem; color: #333; line-height: 1.7; }
+    .intro-text ul { padding-left: 20px; margin-top: 10px; }
+    .intro-text li { margin-bottom: 10px; }
+
+    /* ── FORM SECTION ── */
+    .validador-widget { max-width: 800px; margin: 0 auto 60px; width: 100%; padding: 0 20px; }
+    .validador-header { background: linear-gradient(90deg, #014c76 0%, #56a780 100%); padding: 40px 60px; color: #fff; position: relative; }
+    .validador-header h2 { font-size: 1.8rem; font-weight: 700; margin: 0; }
     
-    /* La "cola" o punta inferior izquierda */
-    .validador-header-tail {
-      position: absolute;
-      bottom: -38px;
-      left: 0;
-      width: 48px;
-      height: 40px;
-      background: #00547b; 
-    }
+    /* El rectangulo "cola" que cuelga a la izquierda */
+    .validador-header-tail { position: absolute; bottom: -50px; left: 0; width: 40px; height: 50px; background: #014c76; }
 
-    /* ── CAMPOS DE FORMULARIO ── */
-    .form-container { padding-left: 48px; padding-right: 20px; } 
-    
-    .field-wrapper { margin-bottom: 24px; }
-    .field-wrapper input { 
-      width: 100%; 
-      padding: 16px 20px; 
-      border: 1px solid #999; 
-      border-radius: 6px; 
-      font-family: 'Roboto', sans-serif; 
-      font-size: 1.05rem; 
-      color: #333; 
-      outline: none; 
-      transition: border-color .2s; 
-    }
-    .field-wrapper input::placeholder { color: #777; }
-    .field-wrapper input:focus { border-color: #0078b4; box-shadow: 0 0 0 1px #0078b4; }
+    .form-body { padding: 50px 60px 20px; }
+    .form-input { width: 100%; padding: 16px 20px; border: 1px solid #a0a0a0; border-radius: 4px; font-family: 'Roboto', sans-serif; font-size: 1rem; color: #333; margin-bottom: 24px; outline: none; transition: border-color .2s; }
+    .form-input::placeholder { color: #777; }
+    .form-input:focus { border-color: #0078b4; box-shadow: 0 0 0 1px #0078b4; }
 
-    /* ── BOTON ── */
-    .btn-validar { 
-      background: #0078b4; 
-      color: #fff; 
-      border: none; 
-      border-radius: 6px; 
-      padding: 14px 32px; 
-      font-family: 'Roboto', sans-serif; 
-      font-size: 1.05rem; 
-      font-weight: 500; 
-      cursor: pointer; 
-      transition: background .2s; 
-      margin-top: 8px;
-    }
+    .btn-validar { background: #0078b4; color: #fff; border: none; padding: 14px 28px; border-radius: 4px; font-family: 'Roboto', sans-serif; font-size: 1rem; font-weight: 500; cursor: pointer; transition: background .2s; }
     .btn-validar:hover { background: #005f92; }
     .btn-validar:disabled { background: #a0c4e0; cursor: not-allowed; }
 
     /* ── RESULTADOS Y SPINNER ── */
-    .spinner { display: none; padding: 20px 0; margin-left: 48px; }
+    .spinner { display: none; padding: 20px 0; }
     .spinner.active { display: block; }
     .spinner svg { animation: spin .9s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .result-box { display: none; margin-top: 24px; border-radius: 6px; overflow: hidden; border: 1px solid #ddd; margin-left: 48px; }
+    .result-box { display: none; margin-top: 24px; border-radius: 4px; overflow: hidden; border: 1px solid #ddd; }
     .result-box.visible { display: block; }
     .result-header { padding: 14px 20px; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
     .result-body { padding: 20px; background: #fff; }
 
-    /* ── IMAGEN CON EFECTO SCROLL ── */
-    .image-section { background: #f5f7fa; padding: 60px 20px; border-top: 1px solid #eee; margin-top: 40px; overflow: hidden; }
-    .animated-image-container { max-width: 1000px; margin: 0 auto; }
-    .animated-image-container img { width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    
-    /* Clases de animación */
-    .fade-on-scroll {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-    .fade-on-scroll.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    /* ── CTA BANNER SPLIT (Con Animación) ── */
+    .cta-banner { display: flex; max-width: 900px; margin: 0 auto 80px; align-items: stretch; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .cta-banner.is-visible { opacity: 1; transform: translateY(0); }
+    .cta-left { flex: 1; }
+    .cta-left img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cta-right { flex: 1.2; background: #0b2343; padding: 40px 50px; color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+    .cta-right h3 { font-size: 1.6rem; font-weight: 600; margin-bottom: 16px; line-height: 1.3; }
+    .cta-right p { font-size: 0.9rem; line-height: 1.6; margin-bottom: 24px; color: #d0d8e0; }
+    .cta-btn { border: 1.5px solid #fff; background: transparent; color: #fff; padding: 12px 24px; border-radius: 4px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: background .2s, color .2s; }
+    .cta-btn:hover { background: #fff; color: #0b2343; }
 
     /* ── FOOTER ── */
-    .footer { background: #fff; padding: 40px 40px 20px; border-top: 1px solid #eee; }
-    .footer-container { max-width: 1100px; margin: 0 auto; }
-    .footer img { height: 36px; object-fit: contain; margin-bottom: 24px; }
-    .footer-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; font-size: 0.82rem; }
-    .footer-col h4 { color: #333; font-weight: 700; margin-bottom: 12px; font-size: 0.88rem; }
-    .footer-col a { display: block; color: #666; text-decoration: none; margin-bottom: 8px; }
+    .footer { background: #f9f9fa; border-top: 1px solid #eaeaea; padding: 60px 20px 40px; }
+    .footer-inner { max-width: 1140px; margin: 0 auto; }
+    .footer-logo { margin-bottom: 40px; }
+    .footer-logo img { height: 36px; object-fit: contain; }
+    
+    .footer-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; font-size: 0.85rem; margin-bottom: 50px; }
+    .footer-col h4 { color: #333; font-weight: 700; margin-bottom: 16px; font-size: 0.88rem; }
+    .footer-col a { display: block; color: #666; text-decoration: none; margin-bottom: 12px; }
     .footer-col a:hover { color: #1a6b9a; text-decoration: underline; }
-    .footer-copy { text-align: center; padding: 20px 0 0; font-size: 0.8rem; color: #999; border-top: 1px solid #eee; margin-top: 40px; }
+
+    /* Bottom Footer Section */
+    .footer-bottom-wrap { display: flex; flex-direction: column; gap: 30px; border-top: 1px solid #e0e0e0; padding-top: 30px; }
+    
+    .country-select { border: 1px solid #ccc; border-radius: 4px; padding: 8px 16px; display: inline-flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #333; width: fit-content; background: #fff; cursor: pointer; margin-bottom: 20px; }
+    
+    .footer-bottom-split { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; }
+    .footer-legal-left { font-size: 0.8rem; color: #555; line-height: 1.6; flex: 1; }
+    .footer-legal-links { display: flex; gap: 20px; font-weight: 700; color: #333; margin-bottom: 20px; font-size: 0.85rem; }
+    .footer-legal-links a { color: #333; text-decoration: none; }
+    .footer-contact-info strong { color: #0078b4; }
+    
+    .superintendencia-box { flex-shrink: 0; text-align: left; max-width: 260px; }
+    .superintendencia-box img { width: 220px; object-fit: contain; margin-bottom: 12px; }
+    .superintendencia-box p { font-size: 0.75rem; color: #666; line-height: 1.4; margin: 0; }
+    .superintendencia-box a { color: #0078b4; text-decoration: none; font-weight: 500; }
 
     /* ── MOBILE RESPONSIVE ── */
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       .navbar { padding: 14px 16px; flex-wrap: wrap; justify-content: space-between; }
-      .navbar nav { display: none; }
-      .breadcrumb { padding: 14px 16px; }
+      .navbar nav { display: none; } /* Ocultar nav largo en móviles */
+      .navbar .btn-sucursal { border-left: none; margin-left: 0; padding-left: 0; }
+      .hero-banner { padding: 30px 20px; }
+      .hero-banner h1 { font-size: 2rem; }
       .validador-header { padding: 30px 20px; }
-      .validador-header h1 { font-size: 1.6rem; }
-      .validador-header-tail { width: 30px; height: 25px; bottom: -24px; }
-      .form-container { padding-left: 0; padding-right: 0; }
+      .validador-header h2 { font-size: 1.5rem; }
+      .form-body { padding: 30px 20px; }
       .btn-validar { width: 100%; }
-      .spinner, .result-box { margin-left: 0; }
-      .footer { padding: 30px 16px 20px; }
-      .footer-grid { grid-template-columns: 1fr; gap: 24px; text-align: center; }
+      .cta-banner { flex-direction: column; margin: 40px 20px; }
+      .cta-right { padding: 30px 20px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+      .footer-bottom-split { flex-direction: column; }
+      .footer-legal-links { flex-direction: column; gap: 10px; }
     }
   </style>
 </head>
 <body>
 
-<div class="top-nav-border"></div>
 <div class="navbar">
   <img src="https://49659256.fs1.hubspotusercontent-na1.net/hubfs/49659256/PDFS/LOGOS%20AFP/LOGO%20PROVIDA.png" alt="ProVida AFP"/>
   <nav>
-    <a href="#">CÁMBIATE ▾</a>
-    <a href="#">TRÁMITES Y SERVICIOS ▾</a>
-    <a href="#">TU PENSIÓN ▾</a>
-    <a href="#">AHORROS Y RENTABILIDAD ▾</a>
-    <a href="#">AYUDA ▾</a>
+    <a href="#">CÁMBIATE <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+    <a href="#">TRÁMITES Y SERVICIOS <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+    <a href="#">TU PENSIÓN <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+    <a href="#">AHORROS Y RENTABILIDAD <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+    <a href="#">AYUDA <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
   </nav>
   <a href="#" class="btn-sucursal">
     <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -158,81 +142,165 @@
   <button class="btn-search">🔍</button>
 </div>
 
-<div class="breadcrumb-wrap">
-  <div class="breadcrumb">
-    🏠 &gt; <a href="#">Trámites y Servicios en Línea</a> &gt; <a href="#">Certificados</a> &gt; <strong>Validador de Certificados</strong>
+<div class="breadcrumb-container">
+  <div class="breadcrumb-pill">
+    <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    <a href="#">TRÁMITES Y SERVICIOS EN LÍNEA</a> <span>&gt;</span>
+    <a href="#">CERTIFICADOS</a> <span>&gt;</span>
+    VALIDADOR DE CERTIFICADOS
   </div>
 </div>
 
-<main class="form-section">
-  <div class="validador-header-wrap">
-    <div class="validador-header">
-      <h1>Validador de Certificados</h1>
-    </div>
-    <div class="validador-header-tail"></div>
+<div class="hero-banner">
+  <div class="hero-banner-inner">
+    <h1>Valida tus Certificados</h1>
+  </div>
+</div>
+
+<main>
+  <div class="intro-text">
+    <p><strong>Te contamos cómo validar tu certificado según el formato de tu documento.</strong></p>
+    <ul>
+      <li><strong>Si obtuviste tu certificado en una Sucursal</strong>, tendrás un número de folio con 16 a 18 dígitos. Para validarlo, puedes llamarnos al Contact Center al 600 201 0150 de lunes a jueves de 8:30 a 17:00 hrs. y los viernes hasta las 16:30 hrs.</li>
+      <li><strong>Si obtuviste tu certificado por un canal digital</strong> tendrá entre 8 y 9 dígitos. Puedes validarlo aquí, en el Validador de Certificados:</li>
+    </ul>
   </div>
 
-  <div class="form-container">
-    <div class="field-wrapper">
-      <input type="text" id="rut" placeholder="RUT" maxlength="12"/>
+  <div class="validador-widget">
+    <div class="validador-header">
+      <h2>Validador de Certificados</h2>
+      <div class="validador-header-tail"></div>
     </div>
-    <div class="field-wrapper">
-      <input type="text" id="folio" placeholder="Número de Certificado"/>
+    
+    <div class="form-body">
+      <input type="text" class="form-input" id="rut" placeholder="RUT" maxlength="12"/>
+      <input type="text" class="form-input" id="folio" placeholder="Número de Certificado"/>
+      
+      <button class="btn-validar" id="btn-validar" onclick="validar()">Validar certificado</button>
+
+      <div class="spinner" id="spinner">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="#e0e0e0" stroke-width="3"/>
+          <path d="M12 2a10 10 0 0 1 10 10" stroke="#0078b4" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="result-box" id="result-box">
+        <div class="result-header" id="result-header"></div>
+        <div class="result-body" id="result-body"></div>
+      </div>
     </div>
+  </div>
 
-    <button class="btn-validar" id="btn-validar" onclick="validar()">Validar certificado</button>
-
-    <div class="spinner" id="spinner">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="10" stroke="#e0e0e0" stroke-width="3"/>
-        <path d="M12 2a10 10 0 0 1 10 10" stroke="#0078b4" stroke-width="3" stroke-linecap="round"/>
-      </svg>
+  <div class="cta-banner" id="scroll-cta">
+    <div class="cta-left">
+      <img src="https://49659256.fs1.hubspotusercontent-na1.net/hubfs/49659256/PDFS/provida_imagen.png" alt="Por algo tantas personas nos eligen"/>
     </div>
-
-    <div class="result-box" id="result-box">
-      <div class="result-header" id="result-header"></div>
-      <div class="result-body" id="result-body"></div>
+    <div class="cta-right">
+      <h3>Si aún no estás en ProVida, te esperamos</h3>
+      <p>Cámbiate con nosotros 100% online, sin costo y en pocos pasos. Se parte también de las historias que día a día nos inspiran en todo lo que hacemos.</p>
+      <a href="#" class="cta-btn">QUIERO CAMBIARME</a>
     </div>
   </div>
 </main>
 
-<div class="image-section">
-  <div class="animated-image-container fade-on-scroll">
-    <img src="https://49659256.fs1.hubspotusercontent-na1.net/hubfs/49659256/PDFS/provida_imagen.png" alt="Por qué elegir ProVida - Rentabilidad y Asesoría"/>
-  </div>
-</div>
-
 <div class="footer">
-  <div class="footer-container">
-    <img src="https://49659256.fs1.hubspotusercontent-na1.net/hubfs/49659256/PDFS/LOGOS%20AFP/LOGO%20PROVIDA.png" alt="ProVida AFP"/>
-    <div class="footer-grid">
-      <div class="footer-col"><h4>Trámites y Servicios</h4><a href="#">Trámites en línea</a><a href="#">Obtén tus Certificados</a><a href="#">Tu Cartola</a><a href="#">Contáctanos</a></div>
-      <div class="footer-col"><h4>Tus Ahorros y Pensión</h4><a href="#">Tus Ahorros para tu Pensión</a><a href="#">APV y Depósito Convenido</a><a href="#">Tu Cuenta de Ahorro</a></div>
-      <div class="footer-col"><h4>Rentabilidad y Multifondos</h4><a href="#">Todo sobre Multifondos</a><a href="#">Rentabilidad de los Fondos</a></div>
-      <div class="footer-col"><h4>Empleadores</h4><a href="#">Pago de cotizaciones</a><a href="#">Subsidios y Beneficios</a></div>
-      <div class="footer-col"><h4>Sobre ProVida</h4><a href="#">¿Quiénes Somos?</a><a href="#">Información Financiera</a></div>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="https://49659256.fs1.hubspotusercontent-na1.net/hubfs/49659256/PDFS/LOGOS%20AFP/LOGO%20PROVIDA.png" alt="ProVida AFP"/>
     </div>
-    <div class="footer-copy">AFP ProVida S.A. &copy; 2026 — Contact Center: 600 201 0150</div>
+    
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Trámites y Servicios</h4>
+        <a href="#">Trámites en línea</a>
+        <a href="#">Obtén tus Certificados</a>
+        <a href="#">Obtén y recupera tus claves</a>
+        <a href="#">Tu Cartola</a>
+        <a href="#">Contáctanos</a>
+        <a href="#">Simula tu Pensión</a>
+        <a href="#">Línea de ayuda sobre ética y fraude</a>
+      </div>
+      <div class="footer-col">
+        <h4>Tus Ahorros y Pensión</h4>
+        <a href="#">Tus Ahorros para tu Pensión</a>
+        <a href="#">APV y Depósito Convenido</a>
+        <a href="#">Tu Cuenta de Ahorro</a>
+        <a href="#">Cuidamos tus ahorros</a>
+        <a href="#">Pago de Pensión</a>
+        <a href="#">Beneficios para pensionados</a>
+      </div>
+      <div class="footer-col">
+        <h4>Rentabilidad y Multifondos</h4>
+        <a href="#">Todo sobre Multifondos</a>
+        <a href="#">Rentabilidad de los Fondos</a>
+        <a href="#">Indicadores y el Valor Cuota</a>
+      </div>
+      <div class="footer-col">
+        <h4>Empleadores</h4>
+        <a href="#">Pago de cotizaciones</a>
+        <a href="#">Información que buscas</a>
+        <a href="#">Subsidios y Beneficios</a>
+      </div>
+      <div class="footer-col">
+        <h4>Sobre ProVida</h4>
+        <a href="#">¿Quiénes Somos?</a>
+        <a href="#">Información Financiera</a>
+        <a href="#">Políticas y Procedimientos</a>
+        <a href="#">Sostenibilidad</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom-wrap">
+      <div class="country-select">
+        🇨🇱 Chile ProVida
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+
+      <div class="footer-bottom-split">
+        <div class="footer-legal-left">
+          <div class="footer-legal-links">
+            <a href="#">Políticas de Seguridad</a>
+            <a href="#">Políticas de Privacidad</a>
+            <a href="#">Mapa de Sitio</a>
+          </div>
+          <p>Cambia tus ahorros previsionales a ProVida AFP, una de las principales Administradoras de Fondos de Pensiones en Chile.</p>
+          <br/>
+          <p>AFP ProVida S.A. - [Última Actualización Mayo del 2025]</p>
+          <div class="footer-contact-info">
+            <p>Contact Center: <strong>600 201 0150.</strong></p>
+            <p>Desde el extranjero <strong>+56 2 2720 6820.</strong></p>
+            <p>Contáctanos por WhatsApp: <strong>+569 3228 8919</strong></p>
+          </div>
+        </div>
+
+        <div class="superintendencia-box">
+          <img src="https://49659256.fs1.hubspotusercontent-na1.net/hubfs/49659256/PDFS/PLANTILLAS%20NYC/superintendencia_imagen.png" alt="Superintendencia de Pensiones"/>
+          <p>Entrega tu opinión a la SUPERINTENDENCIA DE PENSIONES sobre la calidad de servicio de tu AFP, <a href="#">comienza aquí</a></p>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
 <script>
-  // ── LOGICA PARA EL EFECTO DE SCROLL DE LA IMAGEN ──
+  // ── LOGICA ANIMACION SCROLL (Fade-in del CTA Banner) ──
   document.addEventListener("DOMContentLoaded", function() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target); // Dejar de observar una vez que aparece
+          observer.unobserve(entry.target); 
         }
       });
     }, { threshold: 0.15 }); 
 
-    const el = document.querySelector('.fade-on-scroll');
-    if (el) observer.observe(el);
+    const ctaBanner = document.getElementById('scroll-cta');
+    if (ctaBanner) observer.observe(ctaBanner);
   });
 
-  // ── LOGICA DEL WEBHOOK ──
+  // ── LOGICA DEL WEBHOOK (MOTOR DE VALIDACION) ──
   const WEBHOOK = 'https://hook.us2.make.com/iq6ps3txx1jaxr91mje7sx47ynbta3kb';
 
   function abrirPDF(b64) {
@@ -273,10 +341,10 @@
         hdr.style.color = '#fff'; hdr.style.border = 'none';
         hdr.innerHTML = `✓ CERTIFICADO VÁLIDO`;
         bdy.innerHTML = `
-          <div style="text-align:center; padding: 20px 0;">
+          <div style="text-align:center; padding: 10px 0;">
             <p style="color:#00547b; font-size:1.1rem; font-weight:700; margin-bottom:12px;">${data.name || 'Documento Oficial Encontrado'}</p>
             <p style="color:#666; font-size:0.95rem; margin-bottom:24px;">La validación se ha realizado con éxito en los registros de ProVida AFP.</p>
-            <button onclick="abrirPDF('${data.pdf}')" style="background:#0078b4; color:#fff; border:none; padding:12px 28px; border-radius:30px; cursor:pointer; font-weight:bold; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(0,120,180,0.3);">Descargar Documento</button>
+            <button onclick="abrirPDF('${data.pdf}')" style="background:#0078b4; color:#fff; border:none; padding:12px 28px; border-radius:4px; cursor:pointer; font-weight:bold; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(0,120,180,0.2);">Descargar Documento</button>
           </div>`;
       } else if (data.found === false) {
         hdr.className = 'result-header error'; 
@@ -284,7 +352,9 @@
         hdr.innerHTML = `❌ Certificado no encontrado`;
         bdy.innerHTML = `<p style="color:#555;font-size:0.95rem;">No hay registros que coincidan con estos datos.</p>`;
       } else {
-        hdr.className = 'result-header error'; hdr.innerHTML = '⚠️ Error inesperado.';
+        hdr.className = 'result-header error'; 
+        hdr.style.background = '#ffebee'; hdr.style.color = '#c62828';
+        hdr.innerHTML = '⚠️ Error inesperado.';
         bdy.innerHTML = '<p>Intente de nuevo.</p>';
       }
       box.classList.add('visible');
