@@ -7,97 +7,138 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Roboto', sans-serif; background: #f5f7fa; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+    body { font-family: 'Roboto', sans-serif; background: #fff; color: #333; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
 
     /* ── NAVBAR ── */
-    .navbar { background: #fff; padding: 14px 40px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.07); }
+    .top-nav-border { border-top: 4px solid #fff; } /* Optional top accent */
+    .navbar { background: #fff; padding: 14px 40px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.05); position: relative; z-index: 10; }
     .navbar img { height: 46px; object-fit: contain; }
-    .navbar nav { display: flex; gap: 4px; margin-left: 20px; }
-    .navbar nav a { font-size: 0.88rem; color: #333; text-decoration: none; padding: 8px 14px; font-weight: 500; }
+    .navbar nav { display: flex; gap: 6px; margin-left: 20px; }
+    .navbar nav a { font-size: 0.85rem; color: #333; text-decoration: none; padding: 8px 12px; font-weight: 600; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; }
     .navbar nav a:hover { color: #1a6b9a; }
-    .navbar .btn-sucursal { margin-left: auto; background: none; border: 1.5px solid #1a6b9a; color: #1a6b9a; padding: 8px 18px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 6px; }
-    .navbar .btn-search { background: none; border: none; cursor: pointer; color: #555; padding: 8px; font-size: 1.2rem; }
+    .navbar .btn-sucursal { margin-left: auto; color: #333; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .navbar .btn-sucursal svg { fill: #333; width: 16px; height: 16px; }
+    .navbar .btn-search { background: none; border: none; cursor: pointer; color: #333; padding: 8px; font-size: 1.2rem; font-weight: bold; margin-left: 10px; }
 
     /* ── BREADCRUMB ── */
-    .breadcrumb { padding: 10px 40px; font-size: 0.78rem; color: #888; display: flex; align-items: center; gap: 6px; background: #f5f7fa; }
+    .breadcrumb-wrap { border-bottom: 1px solid #eee; margin-bottom: 40px; }
+    .breadcrumb { max-width: 1000px; margin: 0 auto; padding: 14px 20px; font-size: 0.8rem; color: #888; }
     .breadcrumb a { color: #1a6b9a; text-decoration: none; }
-    .breadcrumb svg { opacity: 0.5; }
 
-    /* ── HERO ── */
-    .hero { background: linear-gradient(135deg, #1a6b9a 0%, #2ecc8a 100%); padding: 60px 40px; }
-    .hero h1 { color: #fff; font-size: 2.2rem; font-weight: 700; }
+    /* ── MAIN SECTION ── */
+    .form-section { padding: 0 20px 40px; max-width: 900px; margin: 0 auto; width: 100%; }
 
-    /* ── FORM SECTION ── */
-    .form-section { padding: 0 40px 60px; max-width: 900px; margin: 0 auto; width: 100%; }
+    /* ── BANNER DEGRADADO CON COLA ── */
+    .validador-header-wrap { position: relative; margin-bottom: 40px; }
+    .validador-header { 
+      background: linear-gradient(90deg, #00547b 0%, #59a980 100%); 
+      color: #fff; 
+      padding: 50px 60px; 
+      border-radius: 2px;
+    }
+    .validador-header h1 { font-size: 2.2rem; font-weight: 700; margin: 0; letter-spacing: -0.5px; }
+    
+    /* La "cola" o punta inferior izquierda */
+    .validador-header-tail {
+      position: absolute;
+      bottom: -38px;
+      left: 0;
+      width: 48px;
+      height: 40px;
+      background: #00547b; /* Mismo azul del inicio del degradado */
+    }
 
-    .intro-text { font-size: 0.92rem; color: #555; line-height: 1.65; padding: 24px 0; }
-    .intro-text strong { color: #333; }
+    /* ── CAMPOS DE FORMULARIO ── */
+    .form-container { padding-left: 48px; padding-right: 20px; } /* Empuja los inputs un poco a la derecha para alinear con el texto */
+    
+    .field-wrapper { margin-bottom: 24px; }
+    .field-wrapper input { 
+      width: 100%; 
+      padding: 16px 20px; 
+      border: 1px solid #999; 
+      border-radius: 6px; 
+      font-family: 'Roboto', sans-serif; 
+      font-size: 1.05rem; 
+      color: #333; 
+      outline: none; 
+      transition: border-color .2s; 
+    }
+    .field-wrapper input::placeholder { color: #777; }
+    .field-wrapper input:focus { border-color: #0078b4; box-shadow: 0 0 0 1px #0078b4; }
 
-    /* ── THE CARD ── */
-    .validator-card { background: linear-gradient(135deg, #1a6b9a 0%, #2ecc8a 100%); border-radius: 8px; padding: 4px; }
-    .validator-card-inner { background: #fff; border-radius: 6px 6px 0 0; padding: 28px 32px 36px; }
-    .validator-card-inner h2 { color: #fff; font-size: 1.35rem; font-weight: 700; text-align: center; padding: 20px 32px 24px; background: linear-gradient(135deg, #1a6b9a 0%, #2ecc8a 100%); border-radius: 6px 6px 0 0; margin: -28px -32px 28px; }
-
-    .field-outline { border: 1.5px solid #c0c8d0; border-radius: 6px; padding: 14px 18px; margin-bottom: 16px; transition: border-color .2s; }
-    .field-outline:focus-within { border-color: #1a6b9a; }
-    .field-outline input { width: 100%; border: none; font-family: 'Roboto', sans-serif; font-size: 1rem; color: #333; outline: none; background: transparent; }
-    .field-outline input::placeholder { color: #aaa; }
-
-    .btn-validar { width: 100%; padding: 14px; background: #1a7cbf; color: #fff; border: none; border-radius: 6px; font-family: 'Roboto', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: background .2s; margin-top: 4px; }
-    .btn-validar:hover { background: #155d99; }
+    /* ── BOTON ── */
+    .btn-validar { 
+      background: #0078b4; 
+      color: #fff; 
+      border: none; 
+      border-radius: 6px; 
+      padding: 14px 32px; 
+      font-family: 'Roboto', sans-serif; 
+      font-size: 1.05rem; 
+      font-weight: 500; 
+      cursor: pointer; 
+      transition: background .2s; 
+      margin-top: 8px;
+    }
+    .btn-validar:hover { background: #005f92; }
     .btn-validar:disabled { background: #a0c4e0; cursor: not-allowed; }
 
-    .spinner { display: none; text-align: center; padding: 20px 0; }
+    /* ── RESULTADOS Y SPINNER ── */
+    .spinner { display: none; padding: 20px 0; margin-left: 48px; }
     .spinner.active { display: block; }
     .spinner svg { animation: spin .9s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .result-box { display: none; margin-top: 20px; border-radius: 6px; overflow: hidden; border: 1px solid #ddd; }
+    .result-box { display: none; margin-top: 24px; border-radius: 6px; overflow: hidden; border: 1px solid #ddd; margin-left: 48px; }
     .result-box.visible { display: block; }
-    .result-header { padding: 12px 18px; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
-    .result-header.success { background: #e8f5e9; color: #2e7d32; border-bottom: 2px solid #2e7d32; }
-    .result-header.error { background: #ffebee; color: #c62828; border-bottom: 2px solid #c62828; }
-    .result-body { padding: 18px; background: #fff; }
-    .result-body .name { font-size: 1rem; font-weight: 700; margin-bottom: 14px; }
-    .btn-pdf { display: inline-flex; align-items: center; gap: 7px; background: #1a7cbf; color: #fff; padding: 9px 18px; border-radius: 4px; font-size: 0.88rem; font-weight: 600; cursor: pointer; border: none; font-family: 'Roboto', sans-serif; transition: background .2s; }
-    .btn-pdf:hover { background: #155d99; }
+    .result-header { padding: 14px 20px; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+    .result-body { padding: 20px; background: #fff; }
 
-    /* ── CTA BANNER ── */
-    .cta-banner { background: #1a2744; display: flex; align-items: center; border-radius: 0 0 0 0; overflow: hidden; margin-top: 32px; }
-    .cta-banner .img-side { background: linear-gradient(135deg, #1a6b9a, #2ecc8a); width: 220px; min-height: 120px; display: flex; align-items: center; justify-content: center; padding: 20px; color: #fff; font-weight: 700; font-size: 0.95rem; text-align: center; }
-    .cta-banner .text-side { padding: 28px 32px; color: #fff; flex: 1; }
-    .cta-banner .text-side h3 { font-size: 1.3rem; margin-bottom: 10px; }
-    .cta-banner .text-side p { font-size: 0.88rem; opacity: 0.85; margin-bottom: 16px; }
-    .cta-banner .text-side a { border: 2px solid #fff; color: #fff; padding: 8px 20px; font-size: 0.82rem; font-weight: 700; text-decoration: none; letter-spacing: .05em; }
+    /* ── IMAGEN CON EFECTO SCROLL ── */
+    .image-section { background: #f5f7fa; padding: 60px 20px; border-top: 1px solid #eee; margin-top: 40px; overflow: hidden; }
+    .animated-image-container { max-width: 1000px; margin: 0 auto; }
+    .animated-image-container img { width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    
+    /* Clases de animación */
+    .fade-on-scroll {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     /* ── FOOTER ── */
-    .footer { background: #f5f7fa; border-top: 1px solid #e0e4e8; padding: 32px 40px; }
-    .footer img { height: 36px; object-fit: contain; margin-bottom: 20px; }
-    .footer-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; font-size: 0.82rem; }
-    .footer-col h4 { color: #333; font-weight: 600; margin-bottom: 10px; font-size: 0.85rem; }
-    .footer-col a { display: block; color: #666; text-decoration: none; margin-bottom: 5px; }
-    .footer-copy { text-align: center; padding: 14px; font-size: 0.75rem; color: #999; border-top: 1px solid #e0e4e8; margin-top: 28px; }
+    .footer { background: #fff; padding: 40px 40px 20px; border-top: 1px solid #eee; }
+    .footer-container { max-width: 1100px; margin: 0 auto; }
+    .footer img { height: 36px; object-fit: contain; margin-bottom: 24px; }
+    .footer-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; font-size: 0.82rem; }
+    .footer-col h4 { color: #333; font-weight: 700; margin-bottom: 12px; font-size: 0.88rem; }
+    .footer-col a { display: block; color: #666; text-decoration: none; margin-bottom: 8px; }
+    .footer-col a:hover { color: #1a6b9a; text-decoration: underline; }
+    .footer-copy { text-align: center; padding: 20px 0 0; font-size: 0.8rem; color: #999; border-top: 1px solid #eee; margin-top: 40px; }
 
     /* ── MOBILE RESPONSIVE ── */
     @media (max-width: 768px) {
-      .navbar { padding: 10px 16px; flex-wrap: wrap; justify-content: space-between; }
-      .navbar nav { display: none; /* Hide complex nav on mobile */ }
-      .navbar .btn-sucursal { margin-left: 0; }
-      .breadcrumb { padding: 10px 16px; flex-wrap: wrap; }
-      .hero { padding: 40px 16px; text-align: center; }
-      .hero h1 { font-size: 1.8rem; }
-      .form-section { padding: 0 16px 40px; }
-      .validator-card-inner { padding: 20px 16px; }
-      .validator-card-inner h2 { margin: -20px -16px 20px; padding: 16px; font-size: 1.1rem; }
-      .cta-banner { flex-direction: column; text-align: center; }
-      .cta-banner .img-side { width: 100%; min-height: auto; }
-      .footer { padding: 24px 16px; }
-      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+      .navbar { padding: 14px 16px; flex-wrap: wrap; justify-content: space-between; }
+      .navbar nav { display: none; }
+      .breadcrumb { padding: 14px 16px; }
+      .validador-header { padding: 30px 20px; }
+      .validador-header h1 { font-size: 1.6rem; }
+      .validador-header-tail { width: 30px; height: 25px; bottom: -24px; }
+      .form-container { padding-left: 0; padding-right: 0; }
+      .btn-validar { width: 100%; }
+      .spinner, .result-box { margin-left: 0; }
+      .footer { padding: 30px 16px 20px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 24px; text-align: center; }
     }
   </style>
 </head>
 <body>
 
+<div class="top-nav-border"></div>
 <div class="navbar">
   <img src="https://49659256.fs1.hubspotusercontent-na1.net/hubfs/49659256/PDFS/LOGOS%20AFP/LOGO%20PROVIDA.png" alt="ProVida AFP"/>
   <nav>
@@ -107,79 +148,88 @@
     <a href="#">AHORROS Y RENTABILIDAD ▾</a>
     <a href="#">AYUDA ▾</a>
   </nav>
-  <a href="#" class="btn-sucursal">👤 Sucursal Virtual</a>
+  <a href="#" class="btn-sucursal">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    Sucursal Virtual
+  </a>
   <button class="btn-search">🔍</button>
 </div>
 
-<div class="breadcrumb">
-  🏠 &gt; <a href="#">Trámites y Servicios en Línea</a> &gt; <a href="#">Certificados</a> &gt; <strong>Validador de Certificados</strong>
+<div class="breadcrumb-wrap">
+  <div class="breadcrumb">
+    🏠 &gt; <a href="#">Trámites y Servicios en Línea</a> &gt; <a href="#">Certificados</a> &gt; <strong>Validador de Certificados</strong>
+  </div>
 </div>
 
-<div class="hero">
-  <h1>Valida tus Certificados</h1>
-</div>
-
-<div class="form-section">
-  <div class="intro-text">
-    <p><strong>Te contamos cómo validar tu certificado según el formato de tu documento.</strong></p>
-    <br/>
-    <p>• <strong>Si obtuviste tu certificado en una Sucursal</strong>, tendrás un número de folio con 16 a 18 dígitos. Para validarlo, puedes llamarnos al Contact Center al 600 201 0150 de lunes a jueves de 8:30 a 17:00 hrs. y los viernes hasta las 16:30 hrs.</p>
-    <br/>
-    <p>• <strong>Si obtuviste tu certificado por un canal digital</strong> tendrá entre 8 y 9 dígitos. Puedes validarlo aquí, en el Validador de Certificados:</p>
+<main class="form-section">
+  <div class="validador-header-wrap">
+    <div class="validador-header">
+      <h1>Validador de Certificados</h1>
+    </div>
+    <div class="validador-header-tail"></div>
   </div>
 
-  <div class="validator-card">
-    <div class="validator-card-inner">
-      <h2>Validador de Certificados</h2>
+  <div class="form-container">
+    <div class="field-wrapper">
+      <input type="text" id="rut" placeholder="RUT" maxlength="12"/>
+    </div>
+    <div class="field-wrapper">
+      <input type="text" id="folio" placeholder="Número de Certificado"/>
+    </div>
 
-      <div class="field-outline">
-        <input type="text" id="rut" placeholder="RUT" maxlength="12"/>
-      </div>
+    <button class="btn-validar" id="btn-validar" onclick="validar()">Validar certificado</button>
 
-      <div class="field-outline">
-        <input type="text" id="folio" placeholder="Número de Certificado"/>
-      </div>
+    <div class="spinner" id="spinner">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="#e0e0e0" stroke-width="3"/>
+        <path d="M12 2a10 10 0 0 1 10 10" stroke="#0078b4" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
 
-      <button class="btn-validar" id="btn-validar" onclick="validar()">Validar certificado</button>
-
-      <div class="spinner" id="spinner">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" stroke="#e0e0e0" stroke-width="3"/>
-          <path d="M12 2a10 10 0 0 1 10 10" stroke="#1a7cbf" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-        <p style="margin-top:6px;color:#888;font-size:0.85rem;">Consultando...</p>
-      </div>
-
-      <div class="result-box" id="result-box">
-        <div class="result-header" id="result-header"></div>
-        <div class="result-body" id="result-body"></div>
-      </div>
+    <div class="result-box" id="result-box">
+      <div class="result-header" id="result-header"></div>
+      <div class="result-body" id="result-body"></div>
     </div>
   </div>
+</main>
 
-  <div class="cta-banner">
-    <div class="img-side">Por algo<br/><strong>tantas personas<br/>nos eligen</strong></div>
-    <div class="text-side">
-      <h3>Si aún no estás en ProVida, te esperamos</h3>
-      <p>Cámbiate con nosotros 100% online, sin costo y en pocos pasos.</p>
-      <a href="#">QUIERO CAMBIARME</a>
-    </div>
+<div class="image-section">
+  <div class="animated-image-container fade-on-scroll">
+    <img src="https://49659256.fs1.hubspotusercontent-na1.net/hubfs/49659256/PDFS/provida_imagen.png" alt="Por qué elegir ProVida - Rentabilidad y Asesoría"/>
   </div>
 </div>
 
 <div class="footer">
-  <img src="https://49659256.fs1.hubspotusercontent-na1.net/hubfs/49659256/PDFS/LOGOS%20AFP/LOGO%20PROVIDA.png" alt="ProVida AFP"/>
-  <div class="footer-grid">
-    <div class="footer-col"><h4>Trámites y Servicios</h4><a href="#">Trámites en línea</a><a href="#">Obtén tus Certificados</a><a href="#">Tu Cartola</a><a href="#">Contáctanos</a></div>
-    <div class="footer-col"><h4>Tus Ahorros y Pensión</h4><a href="#">Tus Ahorros para tu Pensión</a><a href="#">APV y Depósito Convenido</a><a href="#">Tu Cuenta de Ahorro</a></div>
-    <div class="footer-col"><h4>Rentabilidad y Multifondos</h4><a href="#">Todo sobre Multifondos</a><a href="#">Rentabilidad de los Fondos</a></div>
-    <div class="footer-col"><h4>Empleadores</h4><a href="#">Pago de cotizaciones</a><a href="#">Subsidios y Beneficios</a></div>
-    <div class="footer-col"><h4>Sobre ProVida</h4><a href="#">¿Quiénes Somos?</a><a href="#">Información Financiera</a></div>
+  <div class="footer-container">
+    <img src="https://49659256.fs1.hubspotusercontent-na1.net/hubfs/49659256/PDFS/LOGOS%20AFP/LOGO%20PROVIDA.png" alt="ProVida AFP"/>
+    <div class="footer-grid">
+      <div class="footer-col"><h4>Trámites y Servicios</h4><a href="#">Trámites en línea</a><a href="#">Obtén tus Certificados</a><a href="#">Tu Cartola</a><a href="#">Contáctanos</a></div>
+      <div class="footer-col"><h4>Tus Ahorros y Pensión</h4><a href="#">Tus Ahorros para tu Pensión</a><a href="#">APV y Depósito Convenido</a><a href="#">Tu Cuenta de Ahorro</a></div>
+      <div class="footer-col"><h4>Rentabilidad y Multifondos</h4><a href="#">Todo sobre Multifondos</a><a href="#">Rentabilidad de los Fondos</a></div>
+      <div class="footer-col"><h4>Empleadores</h4><a href="#">Pago de cotizaciones</a><a href="#">Subsidios y Beneficios</a></div>
+      <div class="footer-col"><h4>Sobre ProVida</h4><a href="#">¿Quiénes Somos?</a><a href="#">Información Financiera</a></div>
+    </div>
+    <div class="footer-copy">AFP ProVida S.A. &copy; 2026 — Contact Center: 600 201 0150</div>
   </div>
-  <div class="footer-copy">AFP ProVida S.A. &copy; 2026 — Contact Center: 600 201 0150</div>
 </div>
 
 <script>
+  // ── LOGICA PARA EL EFECTO DE SCROLL DE LA IMAGEN ──
+  document.addEventListener("DOMContentLoaded", function() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target); // Dejar de observar una vez que aparece
+        }
+      });
+    }, { threshold: 0.15 }); // Se activa cuando se ve al menos el 15% de la imagen
+
+    const el = document.querySelector('.fade-on-scroll');
+    if (el) observer.observe(el);
+  });
+
+  // ── LOGICA DEL WEBHOOK (Intacta) ──
   const WEBHOOK = 'https://hook.us2.make.com/iq6ps3txx1jaxr91mje7sx47ynbta3kb';
 
   function abrirPDF(b64) {
@@ -209,32 +259,38 @@
         body: JSON.stringify({ uuid: uuid, afp: 'Provida' }), signal: controller.signal
       });
       clearTimeout(timeout); const data = await res.json();
-      
       document.getElementById('spinner').classList.remove('active');
+      
       const box = document.getElementById('result-box'), hdr = document.getElementById('result-header'), bdy = document.getElementById('result-body');
       
       if (data.found === true && data.pdf) {
         hdr.className = 'result-header success';
-        hdr.style.background = 'linear-gradient(135deg, #1a6b9a, #2ecc8a)';
+        hdr.style.background = 'linear-gradient(135deg, #00547b, #59a980)';
         hdr.style.color = '#fff'; hdr.style.border = 'none';
         hdr.innerHTML = `✓ CERTIFICADO VÁLIDO`;
         bdy.innerHTML = `
           <div style="text-align:center; padding: 20px 0;">
-            <p style="color:#1a6b9a; font-size:1.1rem; font-weight:700; margin-bottom:12px;">${data.name || 'Documento Oficial Encontrado'}</p>
-            <p style="color:#666; font-size:0.9rem; margin-bottom:24px;">La validación se ha realizado con éxito en los registros de ProVida AFP.</p>
-            <button onclick="abrirPDF('${data.pdf}')" style="background:#1a7cbf; color:#fff; border:none; padding:10px 24px; border-radius:30px; cursor:pointer; font-weight:bold; box-shadow: 0 4px 10px rgba(26,124,191,0.3);">Descargar Documento</button>
+            <p style="color:#00547b; font-size:1.1rem; font-weight:700; margin-bottom:12px;">${data.name || 'Documento Oficial Encontrado'}</p>
+            <p style="color:#666; font-size:0.95rem; margin-bottom:24px;">La validación se ha realizado con éxito en los registros de ProVida AFP.</p>
+            <button onclick="abrirPDF('${data.pdf}')" style="background:#0078b4; color:#fff; border:none; padding:12px 28px; border-radius:30px; cursor:pointer; font-weight:bold; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(0,120,180,0.3);">Descargar Documento</button>
           </div>`;
       } else if (data.found === false) {
-        hdr.className = 'result-header error'; hdr.innerHTML = `❌ Certificado no encontrado`;
-        bdy.innerHTML = `<p style="color:#555;font-size:0.9rem;">No hay registros con estos datos.</p>`;
+        hdr.className = 'result-header error'; 
+        hdr.style.background = '#ffebee'; hdr.style.color = '#c62828'; hdr.style.borderBottom = '2px solid #c62828';
+        hdr.innerHTML = `❌ Certificado no encontrado`;
+        bdy.innerHTML = `<p style="color:#555;font-size:0.95rem;">No hay registros que coincidan con estos datos.</p>`;
       } else {
         hdr.className = 'result-header error'; hdr.innerHTML = '⚠️ Error inesperado.';
+        bdy.innerHTML = '<p>Intente de nuevo.</p>';
       }
       box.classList.add('visible');
     } catch(err) {
       clearTimeout(timeout); document.getElementById('spinner').classList.remove('active');
+      const box = document.getElementById('result-box');
       document.getElementById('result-header').innerHTML = '⚠️ Error de conexión.';
-      document.getElementById('result-box').classList.add('visible');
+      document.getElementById('result-header').style.background = '#ffebee';
+      document.getElementById('result-body').innerHTML = '<p>Revise su conexión a internet.</p>';
+      box.classList.add('visible');
     } finally { document.getElementById('btn-validar').disabled = false; }
   }
 
